@@ -32,8 +32,14 @@ $triangleBorder: 3px !default;
 $arrowPadding: 4px !default;
 $arrowColor: #555 !default;
 
+$nameWidth: 27px !default;
+$namePadding: 6px !default;
+$inputMargin: 16px !default;
+
+
 $inputPadding: 6px !default;
-$selectedFlagWidth: $flagWidth + $flagPadding + $arrowWidth + (2 * $arrowPadding) !default;
+//$selectedFlagWidth: $flagWidth + $flagPadding + $nameWidth + ($namePadding * 2) + $arrowWidth + (2 * $arrowPadding) !default;
+$selectedFlagWidth: $flagWidth + $flagPadding + $nameWidth + ($namePadding * 2) + $flagPadding !default;
 
 // image related variables
 $flagsImagePath: "../img/" !default;
@@ -82,14 +88,16 @@ $mobilePopupMargin: 30px;
     // make space for the selected flag
     // Note: no !important here, as the user may want to tweak this so that the
     // perceived input padding matches their existing styles
-    padding-left: $selectedFlagWidth + $inputPadding;
+    margin-left: $selectedFlagWidth + $inputPadding + $inputMargin;
 
     // any margin-left here will push the selected-flag away
-    margin-left: 0;
+    //margin-left: 0;
 
     // when user presses invalid key, we add a class which instantly adds a bg color,
     // then when we remove that class, this does a quick fade back to no bg
     transition: background-color 100ms ease-out;
+    border: 1px #ccc solid;
+    border-radius: 5px;
   }
   // when user presses invalid key, add this class temporarily to change bg color
   input.iti-invalid-key {
@@ -105,7 +113,11 @@ $mobilePopupMargin: 30px;
     top: 0;
     bottom: 0;
     // prevent the highlighted child from overlapping the input border
-    padding: $borderWidth;
+    //padding: $borderWidth;
+    & > div {
+      border: $borderWidth $greyBorder solid;
+      border-radius: 4px;
+    }
   }
   // hover state - show flag is clickable
   .flag-container:hover {
@@ -139,7 +151,12 @@ $mobilePopupMargin: 30px;
       bottom: 0;
       margin: auto;
     }
-
+    .iti-name {
+      position: absolute;
+      top: 50%;
+      margin-top: -8px;
+      left: $flagWidth + $flagPadding + $namePadding;
+    }
     .iti-arrow {
       position: absolute;
       // split the difference between the flag and the arrow height to verically center

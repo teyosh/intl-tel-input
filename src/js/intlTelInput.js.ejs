@@ -239,10 +239,15 @@ Plugin.prototype = {
     this.selectedFlagInner = $("<div>", {
       "class": "iti-flag"
     }).appendTo(selectedFlag);
-    // CSS triangle
+    this.selectedFlagName = $("<div>", {
+      "class": "iti-name"
+    }).appendTo(selectedFlag);
+        // CSS triangle
+    /*
     $("<div>", {
       "class": "iti-arrow"
     }).appendTo(selectedFlag);
+    */
 
     // country dropdown: preferred countries, then divider, then all countries
     this.countryList = $("<ul>", {
@@ -561,7 +566,7 @@ Plugin.prototype = {
     this._bindDropdownListeners();
 
     // update the arrow
-    this.selectedFlagInner.children(".iti-arrow").addClass("up");
+    //this.selectedFlagInner.children(".iti-arrow").addClass("up");
   },
 
 
@@ -810,7 +815,11 @@ Plugin.prototype = {
     if (this.selectedCountryData.iso2) {
       this.defaultCountry = this.selectedCountryData.iso2;
     }
-
+    if (this.selectedCountryData.iso3) {
+      this.selectedFlagName.text(this.selectedCountryData.iso3.toUpperCase());
+    } else {
+      this.selectedFlagName.text("?");
+    }
     this.selectedFlagInner.attr("class", "iti-flag " + countryCode);
     // update the selected country's title attribute
     var title = (countryCode) ? this.selectedCountryData.name + ": +" + this.selectedCountryData.dialCode : "Unknown";
@@ -871,7 +880,7 @@ Plugin.prototype = {
     this.countryList.addClass("hide");
 
     // update the arrow
-    this.selectedFlagInner.children(".iti-arrow").removeClass("up");
+    //this.selectedFlagInner.children(".iti-arrow").removeClass("up");
 
     // unbind key events
     $(document).off(this.ns);
